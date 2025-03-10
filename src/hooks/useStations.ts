@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from 'react';
-import { collection, query, getDocs, where, doc, getDoc } from 'firebase/firestore';
+import { collection, query, getDocs, where, doc, getDoc, CollectionReference, Query } from 'firebase/firestore';
 import { ref, onValue, off } from 'firebase/database';
 import { db, realtimeDb } from '../firebase/config';
 import { Station } from '../types';
@@ -17,10 +16,12 @@ export function useStations(type?: 'charging' | 'repair') {
         setLoading(true);
         
         // Get station metadata from Firestore
-        let stationsQuery = collection(db, 'stations');
+        const stationsRef = collection(db, 'stations');
+        let stationsQuery: Query = stationsRef;
+        
         if (type) {
           stationsQuery = query(
-            stationsQuery,
+            stationsRef,
             where('type', 'in', [type, 'both'])
           );
         }
