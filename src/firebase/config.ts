@@ -3,14 +3,15 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getDatabase } from 'firebase/database';
 
+// Using mock Firebase configuration for preview
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",                     // Replace with your Firebase API key
-  authDomain: "YOUR_AUTH_DOMAIN",             // Replace with your Firebase auth domain
-  projectId: "YOUR_PROJECT_ID",               // Replace with your Firebase project ID
-  storageBucket: "YOUR_STORAGE_BUCKET",       // Replace with your Firebase storage bucket
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // Replace with your Firebase messaging sender ID
-  appId: "YOUR_APP_ID",                       // Replace with your Firebase app ID
-  databaseURL: "YOUR_DATABASE_URL"            // Replace with your Firebase realtime database URL
+  apiKey: "AIzaSyA1234567890abcdefghijklmnopqrstuv",
+  authDomain: "demo-project.firebaseapp.com",
+  projectId: "demo-project",
+  storageBucket: "demo-project.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abcdef1234567890",
+  databaseURL: "https://demo-project.firebaseio.com"
 };
 
 // Initialize Firebase
@@ -19,4 +20,3 @@ export const db = getFirestore(app);
 export const realtimeDb = getDatabase(app);
 
 export default app;
-
