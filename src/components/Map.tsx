@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapboxMap, Marker, Popup } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -107,28 +106,27 @@ const Map = ({ stations, center = [-95.7129, 37.0902], zoom = 3.5 }: MapProps) =
       
       markerElement.appendChild(iconElement);
 
-      // Create popup
       const popup = new mapboxgl.Popup({
         closeButton: false,
         closeOnClick: false,
         offset: 25,
-        className: 'rounded-lg shadow-lg'
+        className: 'rounded-lg shadow-lg dark:bg-background dark:text-foreground'
       }).setHTML(`
-        <div class="p-3 min-w-[200px]">
-          <h3 class="font-medium text-base">${station.name}</h3>
-          <p class="text-sm text-muted-foreground mt-1">${station.address}</p>
+        <div class="p-3 min-w-[200px] bg-white dark:bg-background text-black dark:text-white">
+          <h3 class="font-medium text-base text-black dark:text-white">${station.name}</h3>
+          <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">${station.address}</p>
           <div class="flex items-center mt-2">
             <span class="inline-flex px-2 py-1 text-xs rounded-full ${
               station.status === 'available' 
-                ? 'bg-green-100 text-green-800' 
+                ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
                 : station.status === 'maintenance' 
-                  ? 'bg-yellow-100 text-yellow-800' 
-                  : 'bg-red-100 text-red-800'
+                  ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' 
+                  : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
             }">
               ${station.status.charAt(0).toUpperCase() + station.status.slice(1)}
             </span>
             ${station.chargingPoints ? `
-              <span class="text-xs text-muted-foreground ml-2">
+              <span class="text-xs text-gray-600 dark:text-gray-400 ml-2">
                 ${station.chargingPoints.available}/${station.chargingPoints.total} available
               </span>
             ` : ''}
@@ -174,7 +172,7 @@ const Map = ({ stations, center = [-95.7129, 37.0902], zoom = 3.5 }: MapProps) =
   return (
     <div className="relative w-full h-full rounded-lg overflow-hidden shadow-sm border">
       <div ref={mapContainer} className="absolute inset-0" />
-      <div className="absolute bottom-4 left-4 z-10 bg-white/90 backdrop-blur-sm rounded-md shadow-sm py-2 px-3 text-xs text-muted-foreground">
+      <div className="absolute bottom-4 left-4 z-10 bg-white dark:bg-background/90 backdrop-blur-sm rounded-md shadow-sm py-2 px-3 text-xs text-black dark:text-white">
         <div className="flex items-center gap-2">
           <span className="w-3 h-3 rounded-full bg-station-available"></span>
           <span>Available</span>
