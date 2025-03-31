@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, MapPin, ZapOff, Map, Shield } from 'lucide-react';
 import Header from '@/components/Header';
@@ -161,10 +160,10 @@ const Index = () => {
               <div className="bg-primary rounded-full p-2 mr-2">
                 <BatteryCharging className="w-5 h-5 text-white" />
               </div>
-              <span className="font-semibold">EV Finder</span>
+              <span className="font-semibold">CHARGEMATE</span>
             </div>
             <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} EV Finder. All rights reserved.
+              © {new Date().getFullYear()} CHARGEMATE. All rights reserved.
             </div>
           </div>
         </div>

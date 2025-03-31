@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -40,7 +39,7 @@ const Header = () => {
           <div className="bg-primary rounded-full p-2 shadow-md">
             <BatteryCharging className="w-5 h-5 text-white" />
           </div>
-          <span className="font-semibold text-lg tracking-tight">EV Finder</span>
+          <span className="font-semibold text-lg tracking-tight">CHARGEMATE</span>
         </Link>
 
         {/* Desktop Navigation */}
