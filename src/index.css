@@ -36,6 +36,36 @@
     --radius: 0.75rem;
   }
 
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 40% 13%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 100% 50%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 217 32% 17%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217 32% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 217 32% 17%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 32% 17%;
+    --input: 217 32% 17%;
+    --ring: 224 76% 48%;
+  }
+
   * {
     @apply border-border;
   }
@@ -67,7 +97,7 @@
   }
   
   .glass-effect {
-    @apply bg-white/80 backdrop-blur-md;
+    @apply bg-white/10 backdrop-blur-md dark:bg-black/30;
   }
 }
 
@@ -83,6 +113,12 @@
 /* Animated gradient background */
 .animated-gradient {
   background: linear-gradient(-45deg, #f3f4f6, #ffffff, #eff6ff, #f0f9ff);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+.dark .animated-gradient {
+  background: linear-gradient(-45deg, #1a1d23, #121419, #1e2433, #171c27);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }

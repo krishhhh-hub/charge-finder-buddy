@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, Filter, X, List, MapPin } from 'lucide-react';
 import Header from '@/components/Header';
-import Map from '@/components/Map';
+import GoogleMap from '@/components/GoogleMap';
 import StationCard from '@/components/StationCard';
 import { useStations } from '@/hooks/useStations';
 import { Station } from '@/types';
@@ -68,7 +67,7 @@ const MapView = () => {
       
       <main className="flex-1 pt-16 flex flex-col">
         {/* Filters */}
-        <div className="bg-white border-b shadow-sm">
+        <div className="bg-card border-b shadow-sm">
           <div className="container px-4 sm:px-6 py-3 flex items-center justify-between">
             <div className="flex items-center gap-3">
               <button
@@ -195,7 +194,7 @@ const MapView = () => {
                 
                 <button
                   onClick={() => setShowFilters(false)}
-                  className="ml-auto bg-white rounded-md p-1.5 hover:bg-secondary/50 transition-colors"
+                  className="ml-auto bg-card rounded-md p-1.5 hover:bg-secondary/50 transition-colors"
                 >
                   <X className="w-4 h-4 text-muted-foreground" />
                 </button>
@@ -228,7 +227,7 @@ const MapView = () => {
                 </div>
               </div>
             ) : (
-              <Map stations={filteredStations} />
+              <GoogleMap stations={filteredStations} />
             )}
           </div>
           
@@ -289,7 +288,7 @@ const TypeFilterPill = ({ type, currentType, onChange, children }: TypeFilterPil
       "inline-flex items-center px-3 py-1.5 rounded-full text-sm transition-colors",
       type === currentType 
         ? "bg-primary text-white" 
-        : "bg-white border hover:bg-secondary/50"
+        : "bg-card border hover:bg-secondary/50"
     )}
   >
     {children}
@@ -316,7 +315,7 @@ const StatusFilterPill = ({ status, currentStatus, onChange, children }: StatusF
             : status === 'maintenance' 
               ? "bg-station-maintenance text-white" 
               : "bg-primary text-white"
-        : "bg-white border hover:bg-secondary/50"
+        : "bg-card border hover:bg-secondary/50"
     )}
   >
     {children}

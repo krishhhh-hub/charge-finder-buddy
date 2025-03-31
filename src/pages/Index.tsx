@@ -56,7 +56,7 @@ const Index = () => {
               </button>
               <button 
                 onClick={() => navigate('/map?type=repair')}
-                className="inline-flex items-center justify-center px-5 py-3 bg-white text-foreground rounded-lg shadow-sm border hover:bg-secondary/30 transition-all duration-200 font-medium"
+                className="inline-flex items-center justify-center px-5 py-3 bg-card text-foreground rounded-lg shadow-sm border hover:bg-secondary/30 transition-all duration-200 font-medium"
               >
                 <Wrench className="w-5 h-5 mr-2" />
                 Find Repair Stations
@@ -66,10 +66,10 @@ const Index = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-16 bg-white rounded-2xl shadow-sm mb-16 animate-scale-in" style={{ animationDelay: '400ms' }}>
+        <section className="py-16 bg-card rounded-2xl shadow-sm mb-16 animate-scale-in" style={{ animationDelay: '400ms' }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">Why Use EV Finder</h2>
+              <h2 className="text-3xl font-bold">Why Use CHARGEMATE</h2>
               <p className="mt-4 text-muted-foreground">Features designed to make your EV journey smoother</p>
             </div>
             
@@ -112,7 +112,7 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {loading ? (
                 Array(3).fill(0).map((_, i) => (
-                  <div key={i} className="h-[320px] rounded-xl bg-white/60 animate-pulse"></div>
+                  <div key={i} className="h-[320px] rounded-xl bg-card/60 animate-pulse"></div>
                 ))
               ) : featuredStations.length > 0 ? (
                 featuredStations.map((station) => (
@@ -153,7 +153,7 @@ const Index = () => {
       </main>
       
       {/* Footer */}
-      <footer className="bg-white border-t py-8">
+      <footer className="bg-card border-t py-8">
         <div className="container px-4 sm:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex items-center mb-4 md:mb-0">
@@ -180,7 +180,7 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ icon, title, description }: FeatureCardProps) => (
   <div className="bg-secondary/30 rounded-xl p-6 hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]">
-    <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-white shadow-sm mb-4">
+    <div className="w-12 h-12 flex items-center justify-center rounded-lg bg-card shadow-sm mb-4">
       {icon}
     </div>
     <h3 className="text-lg font-medium mb-2">{title}</h3>

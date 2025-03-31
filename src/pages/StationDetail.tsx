@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useStation } from '@/hooks/useStations';
 import Header from '@/components/Header';
 import StationDetailComponent from '@/components/StationDetail';
-import Map from '@/components/Map';
+import GoogleMap from '@/components/GoogleMap';
 
 const StationDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,7 +26,7 @@ const StationDetail = () => {
               </div>
             </div>
           ) : error ? (
-            <div className="bg-white rounded-lg shadow-sm p-8 text-center">
+            <div className="bg-card rounded-lg shadow-sm p-8 text-center">
               <h2 className="text-2xl font-bold text-destructive mb-4">Station not found</h2>
               <p className="text-muted-foreground">
                 Sorry, we couldn't find the station you're looking for.
@@ -39,7 +39,7 @@ const StationDetail = () => {
               </div>
               <div className="lg:col-span-1 h-[500px] lg:h-auto">
                 <div className="sticky top-24 h-[500px]">
-                  <Map 
+                  <GoogleMap 
                     stations={[station]} 
                     center={[station.longitude, station.latitude]} 
                     zoom={14} 
