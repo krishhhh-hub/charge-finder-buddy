@@ -1,3 +1,4 @@
+
 import { useRef, useEffect, useState } from 'react';
 import mapboxgl, { Map as MapboxMap, Marker, Popup } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -29,7 +30,7 @@ const Map = ({ stations, center = [-95.7129, 37.0902], zoom = 3.5 }: MapProps) =
 
     const mapInstance = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: 'mapbox://styles/mapbox/dark-v11', // Changed to dark mode map style
       center,
       zoom,
       pitchWithRotate: false,
@@ -50,11 +51,11 @@ const Map = ({ stations, center = [-95.7129, 37.0902], zoom = 3.5 }: MapProps) =
 
       // Add a subtle atmosphere effect
       mapInstance.setFog({
-        color: 'rgb(255, 255, 255)',
-        'high-color': 'rgb(200, 200, 255)',
+        color: 'rgb(20, 20, 30)',  // Darker fog color for dark mode
+        'high-color': 'rgb(40, 40, 80)',
         'horizon-blend': 0.1,
-        'space-color': 'rgb(220, 230, 255)',
-        'star-intensity': 0
+        'space-color': 'rgb(20, 20, 40)',
+        'star-intensity': 0.15   // Slight star effect for dark mode
       });
 
       // Custom map interactions
@@ -170,7 +171,7 @@ const Map = ({ stations, center = [-95.7129, 37.0902], zoom = 3.5 }: MapProps) =
   }, [stations, mapLoaded, navigate, zoom]);
 
   return (
-    <div className="relative w-full h-full rounded-lg overflow-hidden shadow-sm border">
+    <div className="relative w-full h-full rounded-lg overflow-hidden shadow-sm border border-gray-700">
       <div ref={mapContainer} className="absolute inset-0" />
       <div className="absolute bottom-4 left-4 z-10 bg-white dark:bg-background/90 backdrop-blur-sm rounded-md shadow-sm py-2 px-3 text-xs text-black dark:text-white">
         <div className="flex items-center gap-2">

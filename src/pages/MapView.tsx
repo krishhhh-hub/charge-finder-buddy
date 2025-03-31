@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, Filter, X, List, MapPin } from 'lucide-react';
 import Header from '@/components/Header';
-import GoogleMap from '@/components/GoogleMap';
+import Map from '@/components/Map';
 import StationCard from '@/components/StationCard';
 import { useStations } from '@/hooks/useStations';
 import { Station } from '@/types';
@@ -227,7 +227,7 @@ const MapView = () => {
                 </div>
               </div>
             ) : (
-              <GoogleMap stations={filteredStations} />
+              <Map stations={filteredStations} />
             )}
           </div>
           
