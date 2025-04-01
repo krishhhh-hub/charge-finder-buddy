@@ -81,31 +81,42 @@ const Map = ({ stations, center = [-95.7129, 37.0902], zoom = 3.5 }: MapProps) =
 
     // Add new markers
     stations.forEach((station) => {
-      // Create custom marker element
+      // Create custom marker element with nature image
       const markerElement = document.createElement('div');
       markerElement.className = cn(
-        'w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer',
-        'shadow-md hover:scale-110 border-2 border-white',
+        'w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 cursor-pointer',
+        'shadow-lg hover:scale-110',
+        'overflow-hidden border-2',
         station.status === 'available' 
-          ? 'bg-station-available' 
+          ? 'border-green-400' 
           : station.status === 'maintenance' 
-            ? 'bg-station-maintenance' 
-            : 'bg-station-unavailable'
+            ? 'border-yellow-400' 
+            : 'border-red-400'
       );
 
-      // Add icon based on station type
-      const iconElement = document.createElement('div');
-      iconElement.className = 'text-white';
-      
-      if (station.type === 'charging') {
-        iconElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6v14"></path><path d="m15 9-4-3-4 3"></path><path d="M9 20h6"></path></svg>`;
-      } else if (station.type === 'repair') {
-        iconElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>`;
-      } else {
-        iconElement.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6v14"></path><path d="m15 9-4-3-4 3"></path><path d="M9 20h6"></path></svg>`;
-      }
-      
-      markerElement.appendChild(iconElement);
+      // Add nature image based on station type
+      const imageUrl = station.type === 'charging' 
+        ? '/lovable-uploads/3ca6e09a-4f2c-481c-bbaf-9ba7b71ebd04.png' // EV charger with nature background
+        : station.type === 'repair'
+          ? '/lovable-uploads/3ca6e09a-4f2c-481c-bbaf-9ba7b71ebd04.png' // Repair station with nature background
+          : '/lovable-uploads/3ca6e09a-4f2c-481c-bbaf-9ba7b71ebd04.png'; // Default nature image
+        
+      const imgElement = document.createElement('img');
+      imgElement.src = imageUrl;
+      imgElement.className = 'w-full h-full object-cover';
+      markerElement.appendChild(imgElement);
+
+      // Add status indicator
+      const statusIndicator = document.createElement('div');
+      statusIndicator.className = cn(
+        'absolute bottom-0 right-0 w-4 h-4 rounded-full border border-white',
+        station.status === 'available' 
+          ? 'bg-green-500' 
+          : station.status === 'maintenance' 
+            ? 'bg-yellow-500' 
+            : 'bg-red-500'
+      );
+      markerElement.appendChild(statusIndicator);
 
       const popup = new mapboxgl.Popup({
         closeButton: false,

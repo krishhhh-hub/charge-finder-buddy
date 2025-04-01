@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, MapPin, ZapOff, Map, Shield } from 'lucide-react';
 import Header from '@/components/Header';
@@ -75,6 +76,34 @@ const staggerContainer = {
   }
 };
 
+// Video transition effects
+const videoScanline = {
+  hidden: { opacity: 0, y: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      repeat: Infinity,
+      duration: 4,
+      ease: "linear"
+    }
+  }
+};
+
+const glitchText = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    textShadow: ["0 0 0 rgba(0,0,0,0)", "2px 2px 0 rgba(30,174,219,0.7)", "-2px -2px 0 rgba(255,0,0,0.5)", "0 0 0 rgba(0,0,0,0)"],
+    x: ["0px", "2px", "-2px", "0px"],
+    transition: {
+      repeat: Infinity,
+      duration: 4,
+      times: [0, 0.33, 0.66, 1],
+      ease: "easeInOut"
+    }
+  }
+};
+
 const Index = () => {
   const navigate = useNavigate();
   const { stations, loading } = useStations();
@@ -104,7 +133,7 @@ const Index = () => {
 
   return (
     <motion.div 
-      className="min-h-screen bg-black"
+      className="min-h-screen bg-black video-transition"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -112,13 +141,55 @@ const Index = () => {
       <Header />
       
       <main className="container px-4 sm:px-6 pt-20 pb-16">
-        {/* Enhanced Hero Section with EV Image */}
+        {/* Enhanced Hero Section with EV Image and Video Effects */}
         <motion.section 
           className={cn(
             "py-16 relative transition-opacity overflow-hidden rounded-3xl",
             isVisible ? "opacity-100" : "opacity-0"
           )}
         >
+          {/* Video scanline effect overlay */}
+          <motion.div 
+            className="absolute inset-0 z-20 pointer-events-none overflow-hidden"
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div 
+              className="absolute w-full h-[1px] bg-primary/70 blur-[1px]"
+              variants={videoScanline}
+              animate={{ 
+                y: ["-10%", "110%"],
+                opacity: [0.1, 0.8, 0.1],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear"
+              }}
+            />
+            
+            {/* Video static noise effect */}
+            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay">
+              <div className="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg==')]"></div>
+            </div>
+            
+            {/* Horizontal tracking lines occasionally */}
+            <motion.div
+              className="absolute top-0 left-0 w-full h-[2px] bg-primary/50"
+              animate={{ 
+                y: ["200%", "400%", "600%"],
+                opacity: [0, 1, 0],
+                scaleY: [1, 2, 1]
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+                times: [0, 0.5, 1]
+              }}
+            />
+          </motion.div>
+          
           {/* Background electric car image with overlay */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
@@ -159,7 +230,7 @@ const Index = () => {
             <motion.h1 
               initial="hidden"
               animate={playAnimation ? "visible" : "hidden"}
-              variants={illuminateText}
+              variants={glitchText}
               className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white"
             >
               Electrify Your Journey
@@ -192,7 +263,7 @@ const Index = () => {
               <Button
                 onClick={() => navigate('/map?type=charging')}
                 size="lg"
-                className="group relative overflow-hidden bg-primary text-white hover:bg-primary/90 transition-all duration-300"
+                className="group relative overflow-hidden bg-primary text-white hover:bg-primary/90 transition-all duration-300 electric-pulse"
               >
                 <motion.span 
                   className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-400 to-primary z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -219,22 +290,37 @@ const Index = () => {
               </Button>
             </motion.div>
             
-            {/* Animated electric current trail */}
+            {/* Video-like electric current trail */}
             <motion.div
-              initial={{ opacity: 0, width: 0 }}
+              className="absolute bottom-16 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent z-0 opacity-70 blur-[1px]"
               animate={{ 
-                opacity: [0, 1, 0], 
-                width: ["0%", "80%", "0%"],
-                left: ["10%", "10%", "90%"]
+                width: ["0%", "90%", "0%"],
+                left: ["0%", "5%", "100%"],
+                opacity: [0, 0.8, 0]
               }}
               transition={{ 
-                duration: 4, 
+                duration: 5, 
                 repeat: Infinity, 
-                repeatDelay: 1,
+                repeatDelay: 2,
                 ease: "easeInOut" 
               }}
-              className="absolute bottom-16 h-[2px] bg-primary z-0"
             ></motion.div>
+            
+            {/* Digital distortion effects */}
+            <motion.div 
+              className="absolute -right-4 top-1/3 w-24 h-40 opacity-20"
+              animate={{
+                opacity: [0.1, 0.3, 0.1],
+                x: [0, 10, 0]
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <div className="h-full w-full bg-gradient-to-t from-primary/0 via-primary/50 to-primary/0" />
+            </motion.div>
           </div>
         </motion.section>
 
