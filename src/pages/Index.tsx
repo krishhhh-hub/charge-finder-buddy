@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, MapPin, ZapOff, Map, Shield } from 'lucide-react';
 import Header from '@/components/Header';
@@ -132,7 +133,7 @@ const Index = () => {
 
   return (
     <motion.div 
-      className="min-h-screen bg-black video-transition"
+      className="min-h-screen bg-black"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -146,7 +147,7 @@ const Index = () => {
             isVisible ? "opacity-100" : "opacity-0"
           )}
         >
-          {/* Background image */}
+          {/* Background image with line-effect overlay */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
             <motion.div
@@ -162,10 +163,13 @@ const Index = () => {
               className="w-full h-full"
             >
               <img 
-                src="/lovable-uploads/80b5fb2f-294c-4928-8426-8fce72ba4fe9.png" 
+                src="/lovable-uploads/105568a8-b787-4eda-9e91-9669bb41be17.png" 
                 alt="Electric vehicle technology" 
                 className="w-full h-full object-cover object-center rounded-3xl filter brightness-50"
               />
+              
+              {/* Line effect overlay */}
+              <div className="absolute inset-0 line-effect"></div>
             </motion.div>
           </div>
           
@@ -202,13 +206,9 @@ const Index = () => {
             </motion.div>
             
             <motion.h1 
-              initial={{ 
-                opacity: 0, 
-                textShadow: "0 0 0px rgba(30, 174, 219, 0)" 
-              }}
+              initial={{ opacity: 0 }}
               animate={playAnimation ? { 
-                opacity: 1, 
-                textShadow: ["0 0 0px rgba(30, 174, 219, 0)", "0 0 15px rgba(30, 174, 219, 0.7)"],
+                opacity: 1,
                 transition: { 
                   duration: 1.2,
                   delay: 0.3,
@@ -221,17 +221,17 @@ const Index = () => {
             </motion.h1>
             
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
+              initial={{ opacity: 0, width: 0 }}
               animate={playAnimation ? { 
                 opacity: 1, 
-                scale: [1, 1.1, 1],
+                width: "10rem",
                 transition: { 
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut"
+                  duration: 1,
+                  delay: 0.4,
+                  ease: "easeOut"
                 }
               } : "hidden"}
-              className="mt-3 mb-6 h-2 w-40 bg-gradient-to-r from-primary via-blue-400 to-primary/50 rounded-full"
+              className="mt-3 mb-6 h-2 bg-gradient-to-r from-primary via-blue-400 to-primary/50 rounded-full"
             ></motion.div>
             
             <motion.p 
