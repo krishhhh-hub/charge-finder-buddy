@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, MapPin, ZapOff, Map, Shield } from 'lucide-react';
 import Header from '@/components/Header';
@@ -163,13 +162,13 @@ const Index = () => {
               className="w-full h-full"
             >
               <img 
-                src="/lovable-uploads/105568a8-b787-4eda-9e91-9669bb41be17.png" 
+                src="/lovable-uploads/ddb42d89-40dd-4511-a345-209d62d818a4.png" 
                 alt="Electric vehicle technology" 
-                className="w-full h-full object-cover object-center rounded-3xl filter brightness-50"
+                className="w-full h-full object-cover object-center rounded-3xl filter brightness-75"
               />
               
-              {/* Line effect overlay */}
-              <div className="absolute inset-0 line-effect"></div>
+              {/* Enhanced line effect overlay */}
+              <div className="absolute inset-0 line-effect opacity-50"></div>
             </motion.div>
           </div>
           
