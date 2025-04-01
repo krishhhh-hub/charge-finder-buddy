@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, MapPin, ZapOff, Map, Shield } from 'lucide-react';
 import Header from '@/components/Header';
@@ -141,71 +140,31 @@ const Index = () => {
       <Header />
       
       <main className="container px-4 sm:px-6 pt-20 pb-16">
-        {/* Enhanced Hero Section with EV Image and Video Effects */}
         <motion.section 
           className={cn(
             "py-16 relative transition-opacity overflow-hidden rounded-3xl",
             isVisible ? "opacity-100" : "opacity-0"
           )}
         >
-          {/* Video scanline effect overlay */}
-          <motion.div 
-            className="absolute inset-0 z-20 pointer-events-none overflow-hidden"
-            initial="hidden"
-            animate="visible"
-          >
-            <motion.div 
-              className="absolute w-full h-[1px] bg-primary/70 blur-[1px]"
-              variants={videoScanline}
-              animate={{ 
-                y: ["-10%", "110%"],
-                opacity: [0.1, 0.8, 0.1],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "linear"
-              }}
-            />
-            
-            {/* Video static noise effect */}
-            <div className="absolute inset-0 opacity-[0.03] mix-blend-overlay">
-              <div className="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJhIiB4PSIwIiB5PSIwIj48ZmVUdXJidWxlbmNlIGJhc2VGcmVxdWVuY3k9Ii43NSIgc3RpdGNoVGlsZXM9InN0aXRjaCIgdHlwZT0iZnJhY3RhbE5vaXNlIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjMwMCIgaGVpZ2h0PSIzMDAiIGZpbHRlcj0idXJsKCNhKSIgb3BhY2l0eT0iMC4xNSIvPjwvc3ZnPg==')]"></div>
-            </div>
-            
-            {/* Horizontal tracking lines occasionally */}
-            <motion.div
-              className="absolute top-0 left-0 w-full h-[2px] bg-primary/50"
-              animate={{ 
-                y: ["200%", "400%", "600%"],
-                opacity: [0, 1, 0],
-                scaleY: [1, 2, 1]
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-                times: [0, 0.5, 1]
-              }}
-            />
-          </motion.div>
-          
-          {/* Background electric car image with overlay */}
+          {/* Background image */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
             <motion.div
-              initial={{ opacity: 0, scale: 1.1 }}
+              initial={{ opacity: 0, scale: 1.2 }}
               animate={{ 
                 opacity: 1, 
                 scale: 1,
-                transition: { duration: 1.5, ease: "easeOut" }
+                transition: { 
+                  duration: 1.5, 
+                  ease: "easeOut" 
+                }
               }}
               className="w-full h-full"
             >
               <img 
-                src="/lovable-uploads/105568a8-b787-4eda-9e91-9669bb41be17.png" 
-                alt="Electric car charging" 
-                className="w-full h-full object-cover object-center rounded-3xl"
+                src="/lovable-uploads/80b5fb2f-294c-4928-8426-8fce72ba4fe9.png" 
+                alt="Electric vehicle technology" 
+                className="w-full h-full object-cover object-center rounded-3xl filter brightness-50"
               />
             </motion.div>
           </div>
@@ -214,13 +173,28 @@ const Index = () => {
             <motion.div 
               initial="hidden"
               animate={playAnimation ? "visible" : "hidden"}
-              variants={revealFromLeft}
-              custom={0}
+              variants={{
+                hidden: { opacity: 0, x: -50 },
+                visible: { 
+                  opacity: 1, 
+                  x: 0,
+                  transition: { 
+                    duration: 0.8,
+                    delay: 0.2
+                  }
+                }
+              }}
               className="inline-flex items-center px-3 py-1 mb-4 rounded-full bg-primary/20 border border-primary/30 backdrop-blur-sm text-primary text-sm font-medium"
             >
               <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                animate={{ 
+                  rotate: [0, 360],
+                  transition: { 
+                    duration: 3, 
+                    repeat: Infinity, 
+                    ease: "linear" 
+                  }
+                }}
               >
                 <BatteryCharging className="w-4 h-4 mr-1.5" />
               </motion.div>
@@ -228,45 +202,74 @@ const Index = () => {
             </motion.div>
             
             <motion.h1 
-              initial="hidden"
-              animate={playAnimation ? "visible" : "hidden"}
-              variants={glitchText}
+              initial={{ 
+                opacity: 0, 
+                textShadow: "0 0 0px rgba(30, 174, 219, 0)" 
+              }}
+              animate={playAnimation ? { 
+                opacity: 1, 
+                textShadow: ["0 0 0px rgba(30, 174, 219, 0)", "0 0 15px rgba(30, 174, 219, 0.7)"],
+                transition: { 
+                  duration: 1.2,
+                  delay: 0.3,
+                  ease: "easeInOut"
+                }
+              } : "hidden"}
               className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white"
             >
               Electrify Your Journey
             </motion.h1>
             
             <motion.div
-              initial="hidden"
-              animate={playAnimation ? ["visible", "pulse"] : "hidden"}
-              variants={energyPulse}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={playAnimation ? { 
+                opacity: 1, 
+                scale: [1, 1.1, 1],
+                transition: { 
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              } : "hidden"}
               className="mt-3 mb-6 h-2 w-40 bg-gradient-to-r from-primary via-blue-400 to-primary/50 rounded-full"
             ></motion.div>
             
             <motion.p 
-              initial="hidden"
-              animate={playAnimation ? "visible" : "hidden"}
-              variants={revealFromLeft}
-              custom={1}
+              initial={{ opacity: 0, y: 20 }}
+              animate={playAnimation ? { 
+                opacity: 1, 
+                y: 0,
+                transition: { 
+                  duration: 0.8,
+                  delay: 0.4
+                }
+              } : "hidden"}
               className="mt-4 text-lg sm:text-xl text-white/80"
             >
               Seamlessly find charging points and repair services for your electric vehicle in real-time.
             </motion.p>
             
             <motion.div 
-              initial="hidden"
-              animate={playAnimation ? "visible" : "hidden"}
-              variants={revealFromLeft}
-              custom={2}
+              initial={{ opacity: 0, y: 20 }}
+              animate={playAnimation ? { 
+                opacity: 1, 
+                y: 0,
+                transition: { 
+                  duration: 0.8,
+                  delay: 0.5
+                }
+              } : "hidden"}
               className="mt-10 flex flex-col sm:flex-row gap-4"
             >
               <Button
                 onClick={() => navigate('/map?type=charging')}
                 size="lg"
-                className="group relative overflow-hidden bg-primary text-white hover:bg-primary/90 transition-all duration-300 electric-pulse"
+                className="group relative overflow-hidden bg-primary text-white hover:bg-primary/90 transition-all duration-300"
               >
                 <motion.span 
                   className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-400 to-primary z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
                 ></motion.span>
                 <span className="relative z-10 flex items-center">
                   <BatteryCharging className="w-5 h-5 mr-2" />
@@ -288,38 +291,6 @@ const Index = () => {
                   Find Repair Stations
                 </span>
               </Button>
-            </motion.div>
-            
-            {/* Video-like electric current trail */}
-            <motion.div
-              className="absolute bottom-16 h-[3px] bg-gradient-to-r from-transparent via-primary to-transparent z-0 opacity-70 blur-[1px]"
-              animate={{ 
-                width: ["0%", "90%", "0%"],
-                left: ["0%", "5%", "100%"],
-                opacity: [0, 0.8, 0]
-              }}
-              transition={{ 
-                duration: 5, 
-                repeat: Infinity, 
-                repeatDelay: 2,
-                ease: "easeInOut" 
-              }}
-            ></motion.div>
-            
-            {/* Digital distortion effects */}
-            <motion.div 
-              className="absolute -right-4 top-1/3 w-24 h-40 opacity-20"
-              animate={{
-                opacity: [0.1, 0.3, 0.1],
-                x: [0, 10, 0]
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-            >
-              <div className="h-full w-full bg-gradient-to-t from-primary/0 via-primary/50 to-primary/0" />
             </motion.div>
           </div>
         </motion.section>
