@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, MapPin, ZapOff, Map, Shield } from 'lucide-react';
 import Header from '@/components/Header';
@@ -448,7 +449,6 @@ const Index = () => {
                     key={station.id}
                     variants={fadeIn}
                     custom={index}
-                    transition={{ delay: 0.1 * index }}
                   >
                     <StationCard station={station} />
                   </motion.div>
