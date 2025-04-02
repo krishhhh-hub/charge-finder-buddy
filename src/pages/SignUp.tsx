@@ -68,7 +68,10 @@ const SignUp: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl font-bold text-center mb-6">Create an Account</h1>
+          <h1 className="text-2xl font-bold text-center mb-2">Create an Account</h1>
+          <h2 className="text-lg text-center text-muted-foreground mb-6 animate-pulse">
+            Electrify Your EV Experience!
+          </h2>
           
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">

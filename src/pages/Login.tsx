@@ -61,7 +61,10 @@ const Login: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-2xl font-bold text-center mb-6">Log In</h1>
+          <h1 className="text-2xl font-bold text-center mb-2">Log In</h1>
+          <h2 className="text-lg text-center text-muted-foreground mb-6 animate-pulse">
+            Power Up Your Charging Journey!
+          </h2>
           
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
