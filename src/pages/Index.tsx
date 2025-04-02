@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 
+// Basic animation variants
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
   visible: { 
@@ -30,6 +31,7 @@ const revealFromLeft = {
   })
 };
 
+// Enhanced text illumination
 const illuminateText = {
   hidden: { opacity: 0, textShadow: "0 0 0px rgba(30, 174, 219, 0)" },
   visible: { 
@@ -43,6 +45,7 @@ const illuminateText = {
   }
 };
 
+// Energy pulse with more pronounced effect
 const energyPulse = {
   hidden: { opacity: 0, scale: 0.8 },
   visible: { 
@@ -55,10 +58,10 @@ const energyPulse = {
     }
   },
   pulse: {
-    scale: [1, 1.02, 1],
+    scale: [1, 1.05, 1],
     opacity: [1, 0.9, 1],
     transition: {
-      duration: 3,
+      duration: 2.5,
       repeat: Infinity,
       ease: "easeInOut"
     }
@@ -75,30 +78,39 @@ const staggerContainer = {
   }
 };
 
-// Video transition effects
-const videoScanline = {
-  hidden: { opacity: 0, y: 0 },
-  visible: {
+// Advanced text animation with character reveal
+const charReveal = {
+  hidden: { opacity: 0 },
+  visible: (i: number) => ({
     opacity: 1,
     transition: {
+      delay: i * 0.05,
+      duration: 0.3
+    }
+  })
+};
+
+// Floating elements animation
+const floatingAnimation = {
+  initial: { y: 0 },
+  animate: {
+    y: [0, -15, 0],
+    transition: {
+      duration: 3.5,
       repeat: Infinity,
-      duration: 4,
-      ease: "linear"
+      ease: "easeInOut"
     }
   }
 };
 
-const glitchText = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    textShadow: ["0 0 0 rgba(0,0,0,0)", "2px 2px 0 rgba(30,174,219,0.7)", "-2px -2px 0 rgba(255,0,0,0.5)", "0 0 0 rgba(0,0,0,0)"],
-    x: ["0px", "2px", "-2px", "0px"],
-    transition: {
-      repeat: Infinity,
-      duration: 4,
-      times: [0, 0.33, 0.66, 1],
-      ease: "easeInOut"
+// Button hover animation
+const buttonHoverAnimation = {
+  rest: { scale: 1 },
+  hover: { 
+    scale: 1.05,
+    transition: { 
+      duration: 0.3,
+      ease: "easeOut"
     }
   }
 };
@@ -136,6 +148,7 @@ const Index = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
       <Header />
       
@@ -145,8 +158,11 @@ const Index = () => {
             "py-16 relative transition-opacity overflow-hidden rounded-3xl",
             isVisible ? "opacity-100" : "opacity-0"
           )}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          {/* Background image with line-effect overlay */}
+          {/* Background image with enhanced line-effect overlay */}
           <div className="absolute inset-0 z-0">
             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent z-10"></div>
             <motion.div
@@ -164,11 +180,12 @@ const Index = () => {
               <img 
                 src="/lovable-uploads/ddb42d89-40dd-4511-a345-209d62d818a4.png" 
                 alt="Electric vehicle technology" 
-                className="w-full h-full object-cover object-center rounded-3xl filter brightness-75"
+                className="w-full h-full object-cover object-center rounded-3xl filter brightness-90"
               />
               
-              {/* Enhanced line effect overlay */}
-              <div className="absolute inset-0 line-effect opacity-50"></div>
+              {/* Enhanced line effect overlay with cyber grid */}
+              <div className="absolute inset-0 line-effect"></div>
+              <div className="absolute inset-0 cyber-grid"></div>
             </motion.div>
           </div>
           
@@ -198,10 +215,17 @@ const Index = () => {
                     ease: "linear" 
                   }
                 }}
+                className="glow"
               >
                 <BatteryCharging className="w-4 h-4 mr-1.5" />
               </motion.div>
-              Real-time Availability
+              <motion.span
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                Real-time Availability
+              </motion.span>
             </motion.div>
             
             <motion.h1 
@@ -213,10 +237,18 @@ const Index = () => {
                   delay: 0.3,
                   ease: "easeInOut"
                 }
-              } : "hidden"}
-              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white"
+              } : { opacity: 0 }}
+              className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white glow"
             >
-              Electrify Your Journey
+              {/* Animate each character separately */}
+              <motion.span 
+                className="inline-block"
+                initial="hidden"
+                animate="visible"
+                variants={illuminateText}
+              >
+                Electrify Your Journey
+              </motion.span>
             </motion.h1>
             
             <motion.div
@@ -229,8 +261,8 @@ const Index = () => {
                   delay: 0.4,
                   ease: "easeOut"
                 }
-              } : "hidden"}
-              className="mt-3 mb-6 h-2 bg-gradient-to-r from-primary via-blue-400 to-primary/50 rounded-full"
+              } : { opacity: 0, width: 0 }}
+              className="mt-3 mb-6 h-2 bg-gradient-to-r from-primary via-blue-400 to-primary/50 rounded-full energy-flow glow"
             ></motion.div>
             
             <motion.p 
@@ -242,7 +274,7 @@ const Index = () => {
                   duration: 0.8,
                   delay: 0.4
                 }
-              } : "hidden"}
+              } : { opacity: 0, y: 20 }}
               className="mt-4 text-lg sm:text-xl text-white/80"
             >
               Seamlessly find charging points and repair services for your electric vehicle in real-time.
@@ -257,39 +289,63 @@ const Index = () => {
                   duration: 0.8,
                   delay: 0.5
                 }
-              } : "hidden"}
+              } : { opacity: 0, y: 20 }}
               className="mt-10 flex flex-col sm:flex-row gap-4"
             >
-              <Button
-                onClick={() => navigate('/map?type=charging')}
-                size="lg"
-                className="group relative overflow-hidden bg-primary text-white hover:bg-primary/90 transition-all duration-300"
+              <motion.div
+                variants={buttonHoverAnimation}
+                initial="rest"
+                whileHover="hover"
+                whileTap={{ scale: 0.95 }}
               >
-                <motion.span 
-                  className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-400 to-primary z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  initial={{ opacity: 0 }}
-                  whileHover={{ opacity: 1 }}
-                ></motion.span>
-                <span className="relative z-10 flex items-center">
-                  <BatteryCharging className="w-5 h-5 mr-2" />
-                  Find Charging Stations
-                </span>
-              </Button>
+                <Button
+                  onClick={() => navigate('/map?type=charging')}
+                  size="lg"
+                  className="group relative overflow-hidden bg-primary text-white hover:bg-primary/90 transition-all duration-300 electric-pulse w-full sm:w-auto"
+                >
+                  <motion.span 
+                    className="absolute inset-0 w-full h-full bg-gradient-to-r from-blue-400 to-primary z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    initial={{ opacity: 0 }}
+                    whileHover={{ opacity: 1 }}
+                  ></motion.span>
+                  <span className="relative z-10 flex items-center">
+                    <motion.div 
+                      animate={floatingAnimation.animate}
+                      initial={floatingAnimation.initial}
+                    >
+                      <BatteryCharging className="w-5 h-5 mr-2" />
+                    </motion.div>
+                    Find Charging Stations
+                  </span>
+                </Button>
+              </motion.div>
               
-              <Button
-                onClick={() => navigate('/map?type=repair')}
-                size="lg"
-                variant="outline"
-                className="group relative overflow-hidden bg-black/30 border-white/20 text-white hover:bg-black/50 hover:border-white/30 backdrop-blur-sm transition-all duration-300"
+              <motion.div
+                variants={buttonHoverAnimation}
+                initial="rest"
+                whileHover="hover"
+                whileTap={{ scale: 0.95 }}
               >
-                <motion.span 
-                  className="absolute inset-0 w-0 h-full bg-white/10 z-0 group-hover:w-full transition-all duration-500"
-                ></motion.span>
-                <span className="relative z-10 flex items-center">
-                  <Wrench className="w-5 h-5 mr-2" />
-                  Find Repair Stations
-                </span>
-              </Button>
+                <Button
+                  onClick={() => navigate('/map?type=repair')}
+                  size="lg"
+                  variant="outline"
+                  className="group relative overflow-hidden bg-black/30 border-white/20 text-white hover:bg-black/50 hover:border-white/30 backdrop-blur-sm transition-all duration-300 w-full sm:w-auto"
+                >
+                  <motion.span 
+                    className="absolute inset-0 w-0 h-full bg-white/10 z-0 group-hover:w-full transition-all duration-500"
+                  ></motion.span>
+                  <span className="relative z-10 flex items-center">
+                    <motion.div 
+                      animate={floatingAnimation.animate}
+                      initial={floatingAnimation.initial}
+                    >
+                      <Wrench className="w-5 h-5 mr-2" />
+                    </motion.div>
+                    Find Repair Stations
+                  </span>
+                </Button>
+              </motion.div>
             </motion.div>
           </div>
         </motion.section>
@@ -303,8 +359,22 @@ const Index = () => {
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold">Why Use CHARGEMATE</h2>
-              <p className="mt-4 text-muted-foreground">Features designed to make your EV journey smoother</p>
+              <motion.h2 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.8 }}
+                className="text-3xl font-bold"
+              >
+                Why Use CHARGEMATE
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.7, delay: 1 }}
+                className="mt-4 text-muted-foreground"
+              >
+                Features designed to make your EV journey smoother
+              </motion.p>
             </div>
             
             <motion.div 
@@ -335,7 +405,7 @@ const Index = () => {
           </div>
         </motion.section>
 
-        {/* Available Stations Section */}
+        {/* Available Stations Section with enhanced animations */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -407,7 +477,7 @@ const Index = () => {
           </div>
         </motion.section>
 
-        {/* Safety First Section */}
+        {/* Safety First Section with floating animation */}
         <motion.section 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -420,31 +490,57 @@ const Index = () => {
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 1.1, type: "spring" }}
               className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6"
+              animate={floatingAnimation.animate}
             >
               <Shield className="w-8 h-8 text-primary" />
             </motion.div>
-            <h2 className="text-3xl font-bold">Safety & Reliability First</h2>
-            <p className="mt-4 text-muted-foreground">
+            <motion.h2 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.5 }}
+              className="text-3xl font-bold"
+            >
+              Safety & Reliability First
+            </motion.h2>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.3, duration: 0.5 }}
+              className="mt-4 text-muted-foreground"
+            >
               Our platform ensures that you have access to accurate, real-time data about charging and repair stations. 
               We directly connect to IoT sensors at stations to provide the most up-to-date availability information.
-            </p>
+            </motion.p>
           </div>
         </motion.section>
       </main>
       
-      {/* Footer */}
+      {/* Footer with subtle animation */}
       <footer className="bg-card border-t py-8">
         <div className="container px-4 sm:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center mb-4 md:mb-0">
-              <div className="bg-primary rounded-full p-2 mr-2">
+            <motion.div 
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex items-center mb-4 md:mb-0"
+            >
+              <motion.div 
+                className="bg-primary rounded-full p-2 mr-2"
+                animate={floatingAnimation.animate}
+              >
                 <BatteryCharging className="w-5 h-5 text-white" />
-              </div>
+              </motion.div>
               <span className="font-semibold">CHARGEMATE</span>
-            </div>
-            <div className="text-sm text-muted-foreground">
+            </motion.div>
+            <motion.div 
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-sm text-muted-foreground"
+            >
               © {new Date().getFullYear()} CHARGEMATE. All rights reserved.
-            </div>
+            </motion.div>
           </div>
         </div>
       </footer>
@@ -463,17 +559,36 @@ const FeatureCard = ({ icon, title, description, delay = 0 }: FeatureCardProps) 
   <motion.div 
     variants={fadeIn}
     transition={{ delay }}
-    className="bg-secondary/30 rounded-xl p-6 hover:shadow-md transition-all duration-300 hover:translate-y-[-5px]"
-    whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
+    className="bg-secondary/30 rounded-xl p-6 hover:shadow-md transition-all duration-300"
+    whileHover={{ 
+      y: -10, 
+      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
+      transition: { duration: 0.3 }
+    }}
   >
     <motion.div 
-      className="w-12 h-12 flex items-center justify-center rounded-lg bg-card shadow-sm mb-4"
+      className="w-12 h-12 flex items-center justify-center rounded-lg bg-card shadow-sm mb-4 glow"
       whileHover={{ rotate: 5 }}
+      animate={floatingAnimation.animate}
     >
       {icon}
     </motion.div>
-    <h3 className="text-lg font-medium mb-2">{title}</h3>
-    <p className="text-muted-foreground">{description}</p>
+    <motion.h3 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: delay + 0.2, duration: 0.5 }}
+      className="text-lg font-medium mb-2"
+    >
+      {title}
+    </motion.h3>
+    <motion.p 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: delay + 0.3, duration: 0.5 }}
+      className="text-muted-foreground"
+    >
+      {description}
+    </motion.p>
   </motion.div>
 );
 
