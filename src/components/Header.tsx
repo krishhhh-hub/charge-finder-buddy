@@ -1,12 +1,15 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { BatteryCharging, Wrench, Menu, X } from 'lucide-react';
+import { BatteryCharging, Wrench, Menu, X, User } from 'lucide-react';
+import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { currentUser, logout } = useAuth();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -58,6 +61,17 @@ const Header = () => {
             <Wrench className="w-4 h-4 mr-1" />
             Repair
           </NavLink>
+          
+          {currentUser ? (
+            <NavLink to="/profile" isActive={location.pathname === '/profile'}>
+              <User className="w-4 h-4 mr-1" />
+              Profile
+            </NavLink>
+          ) : (
+            <NavLink to="/login" isActive={location.pathname === '/login'}>
+              Login
+            </NavLink>
+          )}
         </nav>
 
         {/* Mobile Menu Button */}
@@ -94,6 +108,17 @@ const Header = () => {
             <Wrench className="w-5 h-5 mr-2" />
             Repair Stations
           </MobileNavLink>
+          
+          {currentUser ? (
+            <MobileNavLink to="/profile" isActive={location.pathname === '/profile'}>
+              <User className="w-5 h-5 mr-2" />
+              Profile
+            </MobileNavLink>
+          ) : (
+            <MobileNavLink to="/login" isActive={location.pathname === '/login'}>
+              Login
+            </MobileNavLink>
+          )}
         </nav>
       </div>
     </header>
