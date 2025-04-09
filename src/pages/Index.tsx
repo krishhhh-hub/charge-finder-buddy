@@ -1,17 +1,35 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { BatteryCharging, Navigation, ChevronRight, Search } from 'lucide-react';
+import { BatteryCharging, Navigation, ChevronRight, Search, MapPin } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import Map from '@/components/Map';
+import { useStations } from '@/hooks/useStations';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt'>('prompt');
   const { toast } = useToast();
+  const { stations } = useStations();
+  
+  // Check for location permission when component mounts
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        setLocationPermission(result.state as 'granted' | 'denied' | 'prompt');
+        
+        // Listen for changes to permission state
+        result.onchange = () => {
+          setLocationPermission(result.state as 'granted' | 'denied' | 'prompt');
+        };
+      });
+    }
+  }, []);
   
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,6 +38,28 @@ const Index = () => {
         title: "Search initiated",
         description: `Searching for "${searchQuery}"`,
       });
+    }
+  };
+  
+  const requestLocationPermission = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocationPermission('granted');
+          toast({
+            title: "Location access granted",
+            description: "We can now show charging stations near you.",
+          });
+        },
+        (error) => {
+          setLocationPermission('denied');
+          toast({
+            title: "Location access denied",
+            description: "Please enable location services to find charging stations near you.",
+            variant: "destructive",
+          });
+        }
+      );
     }
   };
 
@@ -31,8 +71,28 @@ const Index = () => {
         {/* Hero Section */}
         <section className="relative h-[90vh] flex items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <Map />
+            <Map stations={stations} />
           </div>
+          
+          {locationPermission !== 'granted' && (
+            <div className="absolute top-4 right-4 z-20 max-w-md">
+              <Alert className="bg-background/90 backdrop-blur-sm border-primary/20">
+                <MapPin className="h-5 w-5 text-primary" />
+                <AlertTitle>Enable Location Services</AlertTitle>
+                <AlertDescription className="mt-2">
+                  Turn on location services to find charging stations near you.
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="ml-2 bg-primary/10 hover:bg-primary/20"
+                    onClick={requestLocationPermission}
+                  >
+                    Enable
+                  </Button>
+                </AlertDescription>
+              </Alert>
+            </div>
+          )}
           
           <div className="relative z-10 container mx-auto px-4">
             <motion.div 
