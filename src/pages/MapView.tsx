@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, Filter, X, List, MapPin } from 'lucide-react';
@@ -9,12 +8,15 @@ import { useStations } from '@/hooks/useStations';
 import { Station } from '@/types';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'sonner';
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 
 const MapView = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const typeParam = searchParams.get('type') as 'charging' | 'repair' | null;
-  const { stations, loading, error } = useStations();
+  const { stations, loading, error } = useStations(typeParam || undefined);
   
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [filters, setFilters] = useState({
@@ -24,9 +26,26 @@ const MapView = () => {
   
   const [showListView, setShowListView] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [locationPermission, setLocationPermission] = useState<'granted' | 'denied' | 'prompt'>('prompt');
+
+  // Check for location permission when component mounts
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+        setLocationPermission(result.state as 'granted' | 'denied' | 'prompt');
+        
+        // Listen for changes to permission state
+        result.onchange = () => {
+          setLocationPermission(result.state as 'granted' | 'denied' | 'prompt');
+        };
+      });
+    }
+  }, []);
 
   // Filter stations when stations or filters change
   useEffect(() => {
+    if (loading || error) return;
+    
     let filtered = [...stations];
     
     // Filter by type
@@ -44,7 +63,7 @@ const MapView = () => {
     }
     
     setFilteredStations(filtered);
-  }, [stations, filters]);
+  }, [stations, filters, loading, error]);
 
   // Update URL params when filter type changes
   useEffect(() => {
@@ -62,6 +81,25 @@ const MapView = () => {
       type: typeParam || 'all',
     }));
   }, [typeParam]);
+
+  const requestLocationPermission = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocationPermission('granted');
+          toast.success("Location access granted", {
+            description: "We can now show charging stations near you.",
+          });
+        },
+        (error) => {
+          setLocationPermission('denied');
+          toast.error("Location access denied", {
+            description: "Please enable location services to find charging stations near you.",
+          });
+        }
+      );
+    }
+  };
 
   return (
     <motion.div 
@@ -228,6 +266,27 @@ const MapView = () => {
             )}
           </AnimatePresence>
         </div>
+        
+        {/* Location Permission Alert */}
+        {locationPermission !== 'granted' && (
+          <div className="container px-4 sm:px-6 py-3">
+            <Alert className="bg-background/90 backdrop-blur-sm border-primary/20">
+              <MapPin className="h-5 w-5 text-primary" />
+              <AlertTitle>Enable Location Services</AlertTitle>
+              <AlertDescription className="mt-2">
+                Turn on location services to find charging stations near you.
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="ml-2 bg-primary/10 hover:bg-primary/20"
+                  onClick={requestLocationPermission}
+                >
+                  Enable
+                </Button>
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
         
         {/* Main content */}
         <div className="flex-1 flex md:flex-row flex-col">
