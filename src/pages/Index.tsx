@@ -6,11 +6,10 @@ import { BatteryCharging, Navigation, ChevronRight, Search, MapPin } from 'lucid
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
 import Map from '@/components/Map';
 import { useStations } from '@/hooks/useStations';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { toast } from 'sonner';
+import { useToast } from '@/hooks/use-toast';
 
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
