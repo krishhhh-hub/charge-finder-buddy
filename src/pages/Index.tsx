@@ -68,37 +68,12 @@ const Index = () => {
       <Header />
       
       <main className="flex-1">
-        {/* Hero Section with Animation and Glow Effects */}
-        <section className="relative h-[90vh] flex items-center overflow-hidden cyber-grid">
+        {/* Hero Section with Map Display */}
+        <section className="relative h-[90vh] flex items-center overflow-hidden">
           <div className="absolute inset-0 z-0">
-            <div className="h-full w-full bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-black/60"></div>
-            <div className="absolute inset-0 line-effect opacity-20"></div>
-            <div className="absolute inset-0 video-static"></div>
+            {/* Map is now prominently displayed in the background */}
+            <Map stations={stations} />
           </div>
-          
-          {/* Energy flow animation elements */}
-          <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 rounded-full bg-primary/5 energy-flow"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-1/3 h-1/3 rounded-full bg-primary/5 energy-flow" style={{animationDelay: '1s'}}></div>
-          
-          {/* Floating elements */}
-          <motion.div 
-            className="absolute top-1/3 right-1/4 w-16 h-16 floating glow"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7 }}
-            transition={{ duration: 2, delay: 0.5 }}
-          >
-            <BatteryCharging className="h-full w-full text-primary/70" />
-          </motion.div>
-          
-          <motion.div 
-            className="absolute bottom-1/3 left-1/3 w-12 h-12 floating glow"
-            style={{animationDelay: '1.5s'}}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.7 }}
-            transition={{ duration: 2, delay: 1 }}
-          >
-            <Navigation className="h-full w-full text-primary/70" />
-          </motion.div>
           
           {locationPermission !== 'granted' && (
             <div className="absolute top-4 right-4 z-20 max-w-md">
@@ -127,12 +102,12 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white drop-shadow-lg electric-pulse">
-                Future of EV <span className="text-primary">Charging</span>
+              <h1 className="text-5xl md:text-6xl font-bold leading-tight mb-4 text-white drop-shadow-lg">
+                Find EV Charging Stations Near You
               </h1>
               
               <p className="text-xl md:text-2xl text-white/90 mb-8 drop-shadow-lg">
-                Discover the network of charging stations powering your journey forward.
+                Locate and navigate to the nearest charging stations for your electric vehicle.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4">
@@ -146,7 +121,7 @@ const Index = () => {
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
                   </div>
-                  <Button type="submit" size="lg" className="shrink-0 hover:electric-pulse">
+                  <Button type="submit" size="lg" className="shrink-0">
                     Search
                   </Button>
                 </form>
@@ -154,7 +129,7 @@ const Index = () => {
               
               <div className="mt-8">
                 <Link to="/map">
-                  <Button variant="outline" size="lg" className="bg-background/80 backdrop-blur-sm gap-2 electric-pulse">
+                  <Button variant="outline" size="lg" className="bg-background/80 backdrop-blur-sm gap-2">
                     View All Stations <ChevronRight className="h-4 w-4" />
                   </Button>
                 </Link>
