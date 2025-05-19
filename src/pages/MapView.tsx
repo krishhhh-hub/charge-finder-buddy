@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { BatteryCharging, Wrench, Filter, X, List, MapPin } from 'lucide-react';
@@ -21,7 +22,6 @@ const MapView = () => {
   const [filteredStations, setFilteredStations] = useState<Station[]>([]);
   const [filters, setFilters] = useState({
     type: typeParam || 'all',
-    status: 'all',
   });
   
   const [showListView, setShowListView] = useState(false);
@@ -52,13 +52,6 @@ const MapView = () => {
     if (filters.type !== 'all') {
       filtered = filtered.filter(station => 
         station.type === filters.type || station.type === 'both'
-      );
-    }
-    
-    // Filter by status
-    if (filters.status !== 'all') {
-      filtered = filtered.filter(station => 
-        station.status === filters.status
       );
     }
     
@@ -219,40 +212,6 @@ const MapView = () => {
                     </div>
                   </div>
                   
-                  <div>
-                    <h3 className="text-sm font-medium mb-2">Status</h3>
-                    <div className="flex flex-wrap gap-2">
-                      <StatusFilterPill 
-                        status="all" 
-                        currentStatus={filters.status} 
-                        onChange={(status) => setFilters({...filters, status})}
-                      >
-                        All
-                      </StatusFilterPill>
-                      <StatusFilterPill 
-                        status="available" 
-                        currentStatus={filters.status} 
-                        onChange={(status) => setFilters({...filters, status})}
-                      >
-                        Available
-                      </StatusFilterPill>
-                      <StatusFilterPill 
-                        status="unavailable" 
-                        currentStatus={filters.status} 
-                        onChange={(status) => setFilters({...filters, status})}
-                      >
-                        Unavailable
-                      </StatusFilterPill>
-                      <StatusFilterPill 
-                        status="maintenance" 
-                        currentStatus={filters.status} 
-                        onChange={(status) => setFilters({...filters, status})}
-                      >
-                        Maintenance
-                      </StatusFilterPill>
-                    </div>
-                  </div>
-                  
                   <motion.button
                     onClick={() => setShowFilters(false)}
                     className="ml-auto bg-card rounded-md p-1.5 hover:bg-secondary/50 transition-colors"
@@ -400,35 +359,6 @@ const TypeFilterPill = ({ type, currentType, onChange, children }: TypeFilterPil
       "inline-flex items-center px-3 py-1.5 rounded-full text-sm transition-colors ripple",
       type === currentType 
         ? "bg-primary text-white" 
-        : "bg-card border hover:bg-secondary/50"
-    )}
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-  >
-    {children}
-  </motion.button>
-);
-
-interface StatusFilterPillProps {
-  status: 'all' | 'available' | 'unavailable' | 'maintenance';
-  currentStatus: string;
-  onChange: (status: 'all' | 'available' | 'unavailable' | 'maintenance') => void;
-  children: React.ReactNode;
-}
-
-const StatusFilterPill = ({ status, currentStatus, onChange, children }: StatusFilterPillProps) => (
-  <motion.button
-    onClick={() => onChange(status)}
-    className={cn(
-      "inline-flex items-center px-3 py-1.5 rounded-full text-sm transition-colors ripple",
-      status === currentStatus 
-        ? status === 'available' 
-          ? "bg-station-available text-white" 
-          : status === 'unavailable' 
-            ? "bg-station-unavailable text-white" 
-            : status === 'maintenance' 
-              ? "bg-station-maintenance text-white" 
-              : "bg-primary text-white"
         : "bg-card border hover:bg-secondary/50"
     )}
     whileHover={{ scale: 1.05 }}

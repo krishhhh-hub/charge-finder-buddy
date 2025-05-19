@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { BatteryCharging, Navigation, ChevronRight, Search, MapPin } from 'lucide-react';
+import { BatteryCharging, Navigation, ChevronRight, MapPin } from 'lucide-react';
 import Header from '@/components/Header';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -161,7 +161,7 @@ const Index = () => {
             />
             
             <FeatureCard 
-              icon={<Search className="h-10 w-10 text-primary" />}
+              icon={<MapPin className="h-10 w-10 text-primary" />}
               title="Smart Search"
               description="Filter by charging type, price, and amenities to find your ideal spot."
             />

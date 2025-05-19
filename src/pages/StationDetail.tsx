@@ -83,6 +83,7 @@ const StationDetail = () => {
                 className="lg:col-span-1 h-[500px] lg:h-auto"
               >
                 <div className="sticky top-24 h-[500px]">
+                  {/* Pass center with longitude and latitude in correct order for Google Maps */}
                   <Map 
                     stations={[station]} 
                     center={[station.longitude, station.latitude]} 
